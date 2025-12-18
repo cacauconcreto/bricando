@@ -3,88 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quer sair comigo?</title>
+    <title>Convite Especial</title>
     <style>
+        /* Reset básico e centralização */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f8ff;
+            background-color: #ffe4e1; /* Cor de fundo suave */
+            overflow: hidden; /* Impede scroll enquanto o botão foge */
+            text-align: center;
+            padding: 20px;
         }
 
         h1 {
-            color: #333;
+            color: #d63384;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
         }
 
-        .botoes {
-            position: relative;
-            width: 300px;
-            height: 100px;
+        .container-botoes {
             display: flex;
-            justify-content: space-around;
+            gap: 20px;
+            justify-content: center;
             align-items: center;
+            width: 100%;
         }
 
         button {
-            padding: 15px 30px;
-            font-size: 18px;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
             cursor: pointer;
             border: none;
-            border-radius: 10px;
-            transition: transform 0.2s;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            touch-action: manipulation; /* Melhora o toque no celular */
         }
 
         #btn-sim {
             background-color: #28a745;
             color: white;
+            z-index: 1;
         }
 
         #btn-nao {
             background-color: #dc3545;
             color: white;
-            position: absolute; /* Necessário para mover livremente */
+            position: relative; /* Começa no fluxo normal */
         }
     </style>
 </head>
 <body>
 
-    <h1 id="pergunta">Você aceita tomar um café comigo? ☕</h1>
+    <h1 id="pergunta">Você aceita sair comigo? 🌹</h1>
 
-    <div class="botoes">
-        <button id="btn-sim" onclick="aceitou()">Sim</button>
-        <button id="btn-nao" onmouseover="fugir()" onclick="fugir()">Não</button>
+    <div class="container-botoes">
+        <button id="btn-sim" onclick="aceitou()">SIM</button>
+        <button id="btn-nao" onmouseover="fugir()" onclick="fugir()" ontouchstart="fugir()">NÃO</button>
     </div>
 
     <script>
         function fugir() {
             const btnNao = document.getElementById('btn-nao');
             
-            // Calcula posições aleatórias dentro da janela
-            // Subtraímos uma margem para o botão não sair da tela
-            const larguraJanela = window.innerWidth - 100;
-            const alturaJanela = window.innerHeight - 50;
-
-            const novaPosicaoX = Math.random() * larguraJanela;
-            const novaPosicaoY = Math.random() * alturaJanela;
-
-            // Aplica as novas posições
+            // Define o botão como fixo assim que a interação começa
             btnNao.style.position = 'fixed';
+
+            // Calcula limites para que o botão não saia da borda da tela
+            // Largura do botão é aprox 100px, altura 50px
+            const larguraMax = window.innerWidth - 120;
+            const alturaMax = window.innerHeight - 60;
+
+            const novaPosicaoX = Math.max(10, Math.random() * larguraMax);
+            const novaPosicaoY = Math.max(10, Math.random() * alturaMax);
+
             btnNao.style.left = novaPosicaoX + 'px';
             btnNao.style.top = novaPosicaoY + 'px';
         }
 
         function aceitou() {
             const h1 = document.getElementById('pergunta');
-            h1.innerHTML = "Agora sim! Sabia que ia aceitar! ❤️";
+            h1.innerHTML = "Agora sim! Mal posso esperar! ❤️✨";
             
-            // Esconde o botão não após o sim
             document.getElementById('btn-nao').style.display = 'none';
-            // Aumenta o botão sim
-            document.getElementById('btn-sim').style.transform = 'scale(1.5)';
+            document.getElementById('btn-sim').style.transform = 'scale(1.3)';
+            document.getElementById('btn-sim').innerHTML = "Eba!";
+            
+            // Opcional: muda o fundo para comemorar
+            document.body.style.backgroundColor = "#ffc0cb";
         }
     </script>
 
